@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { enviroment } from '../../../../enviroments/environment';
-import { map, mergeMap } from 'rxjs/operators'
+import { map, mergeMap, tap, catchError } from 'rxjs/operators'
 import { TrackModel } from 'src/core/models/tracks.model';
 
 @Injectable({
@@ -43,7 +43,10 @@ export class TrackService {
         // map((dataRevertida) => { //TODO aplicar un filter comun de array
         //   return dataRevertida.filter((track: TrackModel) => track._id !== 1)
         // })
-
+        catchError((err) => {
+          const { status, statusText } = err;
+          return of([])
+        })
       )
   }
 }

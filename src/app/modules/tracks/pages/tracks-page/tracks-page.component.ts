@@ -17,18 +17,21 @@ export class TracksPageComponent implements OnInit, OnDestroy {
 
   tracksTrending: Array<TrackModel> = []
   tracksRandom: Array<TrackModel> = []
-
   listObservers$: Array<Subscription> = []
 
   constructor(private trackService: TrackService) { }
 
   ngOnInit(): void {
+    this.loadDataAll()
+    this.loadDataRandom()
+  }
 
-    this.trackService.getAllTracks$()
-      .subscribe((response: TrackModel[]) => {
-        this.tracksTrending = response
-      })
+  async loadDataAll(): Promise<any> {
+    this.tracksTrending = await this.trackService.getAllTracks$().toPromise()
 
+  }
+
+  loadDataRandom(): void {
     this.trackService.getAllRandom$()
       .subscribe((response: TrackModel[]) => {
         this.tracksRandom = response
@@ -36,7 +39,7 @@ export class TracksPageComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.listObservers$.forEach(u => u.unsubscribe())
+
   }
 
 }
