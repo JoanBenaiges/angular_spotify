@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AuthPageComponent } from './pages/auth-page/auth-page.component';
+import { LoginPageComponent } from './pages/auth-page/login-page.component';
 
 const routes: Routes = [
   {
-    path: 'login',
-    component: AuthPageComponent
+    path: 'login',//TODO http://localhost:4200/auth/login
+    component: LoginPageComponent
   },
   {
     path: '**',
-    component: AuthPageComponent
+    component: LoginPageComponent
   }
 ];
 

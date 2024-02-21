@@ -1,46 +1,42 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { TrackModel } from '@core/models/tracks.model';
 import { MultimediaService } from '@shared/services/multimedia.service';
-import { Subscription } from 'rxjs';
-import { TrackModel } from 'src/core/models/tracks.model';
+import { Subscription } from 'rxjs'; //TODO: Programacion reactiva!
 
 @Component({
   selector: 'app-media-player',
   templateUrl: './media-player.component.html',
   styleUrls: ['./media-player.component.css']
 })
-
-
 export class MediaPlayerComponent implements OnInit, OnDestroy {
-
-  mockCover: TrackModel = {
-    cover: 'https://empresas.blogthinkbig.com/wp-content/uploads/2019/11/Imagen3-245003649.jpg?w=800',
-    album: 'album',
-    name: 'cancion',
-    url: 'http//localhost',
-    _id: 1
-  }
-
-  listObserver: Array<Subscription> = []
-
-
-  constructor(private multimediaService: MultimediaService) { }
+  @ViewChild('progressBar') progressBar: ElementRef = new ElementRef('')
+  listObservers$: Array<Subscription> = []
+  state: string = 'paused'
+  constructor(public multimediaService: MultimediaService) { }
 
   ngOnInit(): void {
-    const observer1: Subscription = this.multimediaService.callback.subscribe(
-      (response: TrackModel) => {
-        console.log('Recibiendo canción...', response)
 
-      }
-    )
-
-    this.listObserver = [observer1]
-
+    const observer1$ = this.multimediaService.playerStatus$
+      .subscribe(status => this.state = status)
+    this.listObservers$ = [observer1$]
   }
 
   ngOnDestroy(): void {
+    this.listObservers$.forEach(u => u.unsubscribe())
+    console.log('🔴🔴🔴 BOOM!');
+  }
 
-    this.listObserver.forEach(u => u.unsubscribe())
+
+  handlePosition(event: MouseEvent): void {
+    const elNative: HTMLElement = this.progressBar.nativeElement
+    const { clientX } = event
+    const { x, width } = elNative.getBoundingClientRect()
+    const clickX = clientX - x //TODO: 1050 - x
+    const percentageFromX = (clickX * 100) / width
+    console.log(`Click(x): ${percentageFromX}`);
+    this.multimediaService.seekAudio(percentageFromX)
 
   }
+
 
 }

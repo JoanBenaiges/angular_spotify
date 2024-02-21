@@ -4,7 +4,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
-import { InjectSessionInterceptor } from '@core/interceptors/inject-session.interceptor';
+//import { InjectSessionInterceptor } from '@core/interceptors/inject-session.interceptor';
 
 @NgModule({
   declarations: [
@@ -15,11 +15,13 @@ import { InjectSessionInterceptor } from '@core/interceptors/inject-session.inte
     AppRoutingModule,
     HttpClientModule
   ],
-  providers: [CookieService,
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: InjectSessionInterceptor
-    }
+  providers: [
+    // CookieService,
+    // {
+    //   provide: HTTP_INTERCEPTORS,
+    //   useClass: InjectSessionInterceptor,
+    //   multi: true
+    // }
   ],
   bootstrap: [AppComponent]
 })

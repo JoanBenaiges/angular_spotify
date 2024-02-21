@@ -16,7 +16,7 @@ const routes: Routes = [
     loadChildren: () => import('@modules/history/history.module').then(m => m.HistoryModule)
   },
   {
-    path: '**',//404 cuando no existe la ruta
+    path: '**',//TODO 404 cuando no existe la ruta
     redirectTo: '/tracks'
   }
 ];
@@ -25,5 +25,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-
 export class HomeRoutingModule { }

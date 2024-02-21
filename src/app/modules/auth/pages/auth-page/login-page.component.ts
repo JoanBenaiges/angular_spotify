@@ -6,11 +6,11 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-auth-page',
-  templateUrl: './auth-page.component.html',
-  styleUrls: ['./auth-page.component.css'],
+  templateUrl: './login-page.component.html',
+  styleUrls: ['./login-page.component.css'],
 })
 
-export class AuthPageComponent implements OnInit {
+export class LoginPageComponent implements OnInit {
 
   errorSession: boolean = false
   formLogin: FormGroup = new FormGroup({})

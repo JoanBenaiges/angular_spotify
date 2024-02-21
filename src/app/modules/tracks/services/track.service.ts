@@ -1,22 +1,23 @@
+import { TrackModel } from '@core/models/tracks.model';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
-import { enviroment } from '../../../../enviroments/environment';
-import { map, mergeMap, tap, catchError } from 'rxjs/operators'
-import { TrackModel } from 'src/core/models/tracks.model';
-
+import { map, mergeMap, tap, catchError } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
 })
-
 export class TrackService {
-  private readonly URL = enviroment.api
+  private readonly URL = environment.api
 
   constructor(private http: HttpClient) {
 
   }
 
-
+  /**
+   * 
+   * @returns Devolver todas las canciones!
+   */
 
   private skipById(listTracks: TrackModel[], id: number): Promise<TrackModel[]> {
     return new Promise((resolve, reject) => {
@@ -25,7 +26,11 @@ export class TrackService {
     })
   }
 
-
+  /**
+   * //TODO {data:[..1,...2,..2]}
+   * 
+   * @returns 
+   */
   getAllTracks$(): Observable<any> {
     return this.http.get(`${this.URL}/tracks`)
       .pipe(
@@ -36,6 +41,10 @@ export class TrackService {
   }
 
 
+  /**
+   * 
+   * @returns Devolver canciones random
+   */
   getAllRandom$(): Observable<any> {
     return this.http.get(`${this.URL}/tracks`)
       .pipe(

@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { TrackModel } from 'src/core/models/tracks.model';
+import { TrackModel } from '@core/models/tracks.model';
 
 @Pipe({
   name: 'orderList'
